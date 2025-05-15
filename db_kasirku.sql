@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0',
   `name` varchar(100) NOT NULL,
+  `cost_price` decimal(10,2) NOT NULL DEFAULT (0),
   `price` decimal(10,2) NOT NULL,
   `stock` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -44,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `transactions` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table db_kasirku.transactions: ~0 rows (approximately)
+-- Dumping data for table db_kasirku.transactions: ~10 rows (approximately)
 
 -- Dumping structure for table db_kasirku.transaction_items
 CREATE TABLE IF NOT EXISTS `transaction_items` (

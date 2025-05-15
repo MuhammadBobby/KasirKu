@@ -48,6 +48,13 @@
                         <td class="px-5 py-4 sm:px-6">
                             <div class="flex items-center">
                                 <p class="text-gray-500 text-theme-sm">
+                                    Rp <?= number_format($data['cost_price'], 0, ',', '.') ?>
+                                </p>
+                            </div>
+                        </td>
+                        <td class="px-5 py-4 sm:px-6">
+                            <div class="flex items-center">
+                                <p class="text-gray-500 text-theme-sm">
                                     Rp <?= number_format($data['price'], 0, ',', '.') ?>
                                 </p>
                             </div>

@@ -37,6 +37,22 @@ $dataTransaksi = $result->fetch_all(MYSQLI_ASSOC);
 $sql = "SELECT SUM(total_price) AS total_omset FROM transactions WHERE MONTH(transaction_date) = MONTH(CURRENT_DATE()) AND YEAR(transaction_date) = YEAR(CURRENT_DATE())";
 $result = $conn->query($sql);
 $omset = $result->fetch_assoc()['total_omset'];
+
+// ambil keuntungan bulan ini
+$sqlKeuntungan = "SELECT 
+    SUM(ti.subtotal) AS total_jual,
+    SUM(ti.quantity * p.cost_price) AS total_modal
+FROM transactions t
+JOIN transaction_items ti ON t.id = ti.transaction_id
+JOIN products p ON ti.product_id = p.id
+WHERE MONTH(t.transaction_date) = MONTH(CURDATE())
+  AND YEAR(t.transaction_date) = YEAR(CURDATE())
+";
+
+$resultKeuntungan = $conn->query($sqlKeuntungan);
+$dataKeuntungan = $resultKeuntungan->fetch_assoc();
+
+$keuntungan = (int) ($dataKeuntungan['total_jual'] - $dataKeuntungan['total_modal']);
 ?>
 
 <!DOCTYPE html>
@@ -162,8 +178,9 @@ $omset = $result->fetch_assoc()['total_omset'];
             </div>
         </div>
 
-        <div class="flex items-center justify-end w-full mt-5 me-5">
-            <p class="text-xl text-slate-500">Total Omset Bulan ini : <span class="font-bold text-slate-800"> Rp <?= number_format($omset, 0, ',', '.') ?></span></p>
+        <div class="flex flex-col items-end justify-end w-full mt-5 me-5">
+            <p class="text-xl text-slate-500">Total Omset Bulan ini : <span class="font-bold text-slate-800"> Rp <?= number_format($omset ?? 0, 0, ',', '.') ?></span></p>
+            <p class="text-xl text-slate-500">Total Keuntungan Bulan ini : <span class="font-bold text-slate-800"> Rp <?= number_format($keuntungan ?? 0, 0, ',', '.') ?></span></p>
         </div>
     </div>
 

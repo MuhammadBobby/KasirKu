@@ -9,6 +9,7 @@ $headerTable = [
     "No",
     "code produk",
     "Nama Produk",
+    "Harga Modal",
     "Harga",
     "Stok",
     "Action"

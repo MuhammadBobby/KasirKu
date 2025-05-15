@@ -27,6 +27,12 @@
                         <input type="text" name="code" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan Kode Produk" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
+                        <label for="cost_price_display" class="block mb-2 text-sm font-medium text-gray-900">Modal</label>
+                        <input type="text" name="cost_price_display" id="cost-price-display" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan Modal" required="">
+
+                        <input type="hidden" name="cost_price" id="cost-price">
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
                         <label for="price_display" class="block mb-2 text-sm font-medium text-gray-900">Harga</label>
                         <input type="text" name="price_display" id="price-display" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Masukkan Harga" required="">
 
@@ -52,6 +58,8 @@
 <script>
     const priceDisplay = document.getElementById("price-display");
     const price = document.getElementById("price");
+    const costPriceDisplay = document.getElementById("cost-price-display");
+    const costPrice = document.getElementById("cost-price");
 
     priceDisplay.addEventListener("input", () => {
         // Ambil angka murni dari input (hapus semua kecuali digit)
@@ -63,5 +71,17 @@
 
         // Simpan nilai bersih ke input hidden
         price.value = priceInt;
+    });
+
+    costPriceDisplay.addEventListener("input", () => {
+        // Ambil angka murni dari input (hapus semua kecuali digit)
+        const raw = costPriceDisplay.value.replace(/\D/g, "");
+        const costPriceInt = parseInt(raw) || 0;
+
+        // Format dengan prefix "Rp " dan pemisah ribuan
+        costPriceDisplay.value = "Rp " + costPriceInt.toLocaleString("id-ID");
+
+        // Simpan nilai bersih ke input hidden
+        costPrice.value = costPriceInt;
     });
 </script>

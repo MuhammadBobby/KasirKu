@@ -38,6 +38,21 @@ $dataTransaksi = $result->fetch_all(MYSQLI_ASSOC);
 $sql = "SELECT SUM(total_price) AS omset FROM transactions WHERE DATE(transaction_date) = CURDATE()";
 $result = $conn->query($sql);
 $omset = $result->fetch_assoc()['omset'];
+
+// ambil keuntungan hari ini
+$sqlKeuntungan = "SELECT 
+    SUM(ti.subtotal) AS total_jual,
+    SUM(ti.quantity * p.cost_price) AS total_modal
+FROM transactions t
+JOIN transaction_items ti ON t.id = ti.transaction_id
+JOIN products p ON ti.product_id = p.id
+WHERE DATE(t.transaction_date) = CURDATE()
+";
+
+$resultKeuntungan = $conn->query($sqlKeuntungan);
+$dataKeuntungan = $resultKeuntungan->fetch_assoc();
+
+$keuntungan = (int) ($dataKeuntungan['total_jual'] - $dataKeuntungan['total_modal']);
 ?>
 
 <!-- periksa apakah ada success -->
@@ -71,7 +86,8 @@ $omset = $result->fetch_assoc()['omset'];
     <!-- table -->
     <?php include 'includes/tableTransaksi.php'; ?>
 
-    <div class="flex items-center justify-end w-full mt-5 me-5">
-        <p class="text-xl text-slate-500">Total Omset Hari ini : <span class="font-bold text-slate-800"> Rp <?= number_format($omset, 0, ',', '.') ?></span></p>
+    <div class="flex flex-col items-end justify-end w-full mt-5 me-5">
+        <p class="text-xl text-slate-500">Total Omset Hari ini : <span class="font-bold text-slate-800"> Rp <?= number_format($omset ?? 0, 0, ',', '.') ?></span></p>
+        <p class="text-xl text-slate-500">Total Keuntungan Hari ini : <span class="font-bold text-slate-800"> Rp <?= number_format($keuntungan ?? 0, 0, ',', '.') ?></span></p>
     </div>
 </div>

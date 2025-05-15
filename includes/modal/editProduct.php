@@ -29,6 +29,12 @@
                         <input type="text" name="code" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value="<?= $data['code'] ?? '' ?>" placeholder="Masukkan Kode Produk" required="">
                     </div>
                     <div class="col-span-2 sm:col-span-1">
+                        <label for="modal_edit_display" class="block mb-2 text-sm font-medium text-gray-900">Modal</label>
+                        <input type="text" name="modal_edit_display" id="cost-price-edit-display-<?= $data['id'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value="Rp <?= number_format($data['cost_price'], 0, ',', '.') ?? '0' ?>" placeholder="Masukkan Harga" required="">
+
+                        <input type="hidden" name="cost_price" id="cost-price-edit-<?= $data['id'] ?>" value="<?= $data['cost_price'] ?? '' ?>">
+                    </div>
+                    <div class="col-span-2 sm:col-span-1">
                         <label for="price_edit_display" class="block mb-2 text-sm font-medium text-gray-900">Harga</label>
                         <input type="text" name="price_edit_display" id="price-edit-display-<?= $data['id'] ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" value="Rp <?= number_format($data['price'], 0, ',', '.') ?? '0' ?>" placeholder="Masukkan Harga" required="">
 
@@ -48,9 +54,24 @@
 
 
 <script>
+    // price
     document.querySelectorAll("[id^='price-edit-display-']").forEach((inputDisplay) => {
         const id = inputDisplay.id.replace("price-edit-display-", "");
         const inputHidden = document.getElementById(`price-edit-${id}`);
+
+        inputDisplay.addEventListener("input", () => {
+            const raw = inputDisplay.value.replace(/\D/g, "");
+            const intVal = parseInt(raw) || 0;
+
+            inputDisplay.value = "Rp " + intVal.toLocaleString("id-ID");
+            inputHidden.value = intVal;
+        });
+    });
+
+    // cost price
+    document.querySelectorAll("[id^='cost-price-edit-display-']").forEach((inputDisplay) => {
+        const id = inputDisplay.id.replace("cost-price-edit-display-", "");
+        const inputHidden = document.getElementById(`cost-price-edit-${id}`);
 
         inputDisplay.addEventListener("input", () => {
             const raw = inputDisplay.value.replace(/\D/g, "");

@@ -7,8 +7,6 @@ $headerTable = [
     "Produk",
     "Jumlah",
     "Total Harga",
-    "Uang Dibayarkan",
-    "Uang Kembalian",
     "Metode Pembayaran",
     "Tanggal Transaksi",
 ];
@@ -19,8 +17,6 @@ $sql = "SELECT
     GROUP_CONCAT(CONCAT(p.name, ' (x', ti.quantity, ')') SEPARATOR ', ') AS product,
     SUM(ti.quantity) AS quantity,
     t.total_price,
-    t.cash_paid,
-    t.change_returned,
     t.pay_method,
     t.transaction_date
 FROM transactions t
@@ -142,20 +138,6 @@ $keuntungan = (int) ($dataKeuntungan['total_jual'] - $dataKeuntungan['total_moda
                                         <p
                                             class="rounded-full bg-success-50 px-2 py-0.5 text-theme-xs font-medium text-success-700">
                                             Rp <?= number_format($data['total_price'], 0, ',', '.') ?>
-                                        </p>
-                                    </div>
-                                </td>
-                                <td class="px-5 py-4 sm:px-6">
-                                    <div class="flex items-center">
-                                        <p class="text-gray-500 text-theme-sm">
-                                            Rp <?= number_format($data['cash_paid'], 0, ',', '.') ?>
-                                        </p>
-                                    </div>
-                                </td>
-                                <td class="px-5 py-4 sm:px-6">
-                                    <div class="flex items-center">
-                                        <p class="text-gray-500 text-theme-sm">
-                                            Rp <?= number_format($data['change_returned'], 0, ',', '.') ?>
                                         </p>
                                     </div>
                                 </td>

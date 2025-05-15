@@ -10,7 +10,11 @@ $totalPrice    = (int) ($_POST['total_price'] ?? 0);
 $cash          = (int) ($_POST['cash_paid'] ?? 0);
 $change        = (int) ($_POST['change_returned'] ?? 0);
 
-
+// valdasi
+if (!$customer || !$payMethod || !$productIds || !$quantities || !$subtotals || $totalPrice <= 0 || $cash <= 0 || $change < 0) {
+    header("Location: ../index.php?page=kasir&failed=Mohon isi semua field.");
+    exit();
+}
 
 // Simpan ke tabel transaksi
 $stmt = $conn->prepare("INSERT INTO transactions (customer, total_price, cash_paid, change_returned, pay_method) VALUES (?, ?, ?, ?, ?)");

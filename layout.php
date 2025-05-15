@@ -38,7 +38,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="assets/js/searchProduk.js"></script>
-    <script src="assets/js/price.js"></script>
+    <!-- <script src="assets/js/price.js"></script> -->
     <script src="assets/js/confirm.js"></script>
 </body>
 
